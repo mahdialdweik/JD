@@ -485,7 +485,7 @@
 
         <!-- Title -->
         <h1>JD Scorecard (WHO)</h1>
-        <div class="sub-header">Job Description & Competency Framework</div>
+        <!-- Removed Sub-header -->
 
         <!-- Header Block -->
         <div class="header-grid">
@@ -644,7 +644,14 @@
         
         // UX: Make clicking anywhere on a date input open the calendar picker natively
         const dateInputs = document.querySelectorAll('input[type="date"]');
+        
+        // Calculate today's date in YYYY-MM-DD format to prevent past dates
+        const today = new Date().toISOString().split('T')[0];
+
         dateInputs.forEach(input => {
+            // Set the minimum selectable date to today
+            input.setAttribute('min', today);
+
             input.addEventListener('click', function(e) {
                 e.preventDefault();
                 try {
