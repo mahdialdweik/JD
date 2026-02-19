@@ -231,6 +231,7 @@
             transition: all 0.2s;
             box-sizing: border-box;
             line-height: 1.6;
+            overflow: hidden; /* Clean look for auto-expanding text areas */
         }
 
         textarea:focus {
@@ -660,6 +661,41 @@
                     }
                 } catch (err) {
                     console.log('Error showing date picker:', err);
+                }
+            });
+        });
+
+        // --- Print Optimization & Auto-Resize ---
+        
+        // 1. Auto-resize textareas as you type so text is never hidden
+        const autoResize = (el) => {
+            el.style.height = 'auto'; // Reset height
+            el.style.height = el.scrollHeight + 'px'; // Set to content height
+        };
+
+        document.querySelectorAll('textarea').forEach(textarea => {
+            // Init resize on load in case of pre-filled content
+            autoResize(textarea);
+            // Resize on input
+            textarea.addEventListener('input', () => autoResize(textarea));
+        });
+
+        // 2. Prepare for Print: Sync all values and expand textareas
+        window.addEventListener('beforeprint', () => {
+            // Expand all textareas to fit content perfectly before printing
+            document.querySelectorAll('textarea').forEach(textarea => {
+                autoResize(textarea);
+                // Fallback: Set innerHTML for legacy print engines
+                textarea.innerHTML = textarea.value; 
+            });
+
+            // "Bake" input values into attributes so they persist in PDF generation
+            document.querySelectorAll('input').forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    if (input.checked) input.setAttribute('checked', 'checked');
+                    else input.removeAttribute('checked');
+                } else {
+                    input.setAttribute('value', input.value);
                 }
             });
         });
