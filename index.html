@@ -4,23 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JD Scorecard (WHO)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #1e40af;
-            --light-bg: #f8fafc;
-            --accent-blue: #eff6ff;
-            --border-color: #334155;
-            --text-main: #0f172a;
+            /* Modern Professional Palette (Matched to Intake Form) */
+            --primary-blue: #2563eb; 
+            --primary-dark: #1e40af;
+            --secondary-bg: #f8fafc; 
+            --white: #ffffff;
+            --text-main: #1e293b; 
+            --text-secondary: #64748b; 
+            --border-color: #cbd5e1; 
+            --input-hover: #f1f5f9;
             --danger-red: #ef4444;
+            --accent-blue: #eff6ff; 
+            --success-green: #10b981;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-main);
-            line-height: 1.4;
+            line-height: 1.5;
             margin: 0;
             padding: 20px;
-            background-color: #cbd5e1;
+            /* Premium dot pattern background */
+            background-color: #e2e8f0;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -28,22 +38,124 @@
 
         /* Page Container */
         .page {
-            background-color: #fff;
+            background-color: var(--white);
             width: 100%;
-            max-width: 850px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 900px;
+            padding: 50px;
+            /* Smoother, deeper shadow for lift */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             box-sizing: border-box;
-            border-radius: 4px;
-            margin-bottom: 60px;
+            border-radius: 16px;
+            margin-bottom: 80px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
-        /* Responsive Header Grid */
+        /* --- Header & Footer Areas --- */
+        .logo-header {
+            width: 100%;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .logo-header img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .page-footer {
+            margin-top: 50px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            opacity: 0.9;
+        }
+
+        .page-footer img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Typography */
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            position: relative;
+            padding-bottom: 18px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-dark));
+            border-radius: 3px;
+        }
+
+        .sub-header {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            letter-spacing: 0.02em;
+        }
+
+        h2 {
+            font-size: 15px;
+            margin: 40px 0 20px 0;
+            font-weight: 700;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.25);
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .instruction {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-style: italic;
+            padding-left: 5px;
+        }
+
+        .section-content {
+            padding: 25px;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            transition: border-color 0.2s;
+        }
+        
+        .section-content:hover {
+            border-color: #94a3b8;
+        }
+
+        /* Inputs & Fields */
         .header-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
         .header-field {
@@ -55,192 +167,306 @@
         }
 
         .header-field span {
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-right: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-right: 12px;
             white-space: nowrap;
+            min-width: 80px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .underline {
             flex-grow: 1;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
             margin-left: 5px;
             display: flex;
             min-width: 100px;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 22px;
-            text-decoration: none;
-            margin: 10px 0 5px 0;
-            font-weight: bold;
-            color: var(--primary-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.3;
+        .underline:hover {
+            border-bottom-color: #94a3b8;
         }
 
-        .sub-header {
-            text-align: center;
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary-blue);
-            padding-bottom: 10px;
+        .underline:focus-within {
+            border-bottom-color: var(--primary-blue);
         }
 
-        h2 {
-            font-size: 16px;
-            margin: 30px 0 10px 0;
-            font-weight: bold;
-            color: white;
-            background-color: var(--primary-blue);
-            padding: 8px 12px;
-            border-radius: 4px;
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            outline: none;
+            padding: 6px 4px;
+            min-height: 30px;
+            transition: background-color 0.2s;
+        }
+        
+        input[type="text"]:focus {
+            background-color: rgba(37, 99, 235, 0.03);
         }
 
-        .section-content {
+        input[type="date"] {
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            background-color: var(--white);
             padding: 15px;
-            background-color: var(--light-bg);
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 90px;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-main);
+            transition: all 0.2s;
+            box-sizing: border-box;
+            line-height: 1.6;
         }
 
-        .instruction {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 10px;
-            font-style: italic;
+        textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            outline: none;
         }
 
-        /* Dynamic Item Styles */
+        /* Dynamic Items */
         .dynamic-item {
             position: relative;
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 6px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
             animation: fadeIn 0.3s ease-in-out;
         }
-
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dynamic-item:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
         }
 
         .delete-btn {
             position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: var(--danger-red);
-            color: white;
-            border: 2px solid white;
+            top: -12px;
+            right: -12px;
+            background-color: var(--white);
+            color: var(--danger-red);
+            border: 1px solid var(--border-color);
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             z-index: 10;
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1;
+            transition: all 0.2s;
+        }
+
+        .delete-btn:hover {
+            background-color: var(--danger-red);
+            color: var(--white);
+            border-color: var(--danger-red);
+            transform: scale(1.1);
         }
 
         .add-btn {
             width: 100%;
-            padding: 12px;
-            background-color: transparent;
-            border: 2px dashed var(--primary-blue);
+            padding: 14px;
+            background-color: var(--white);
+            border: 1px dashed var(--primary-blue);
             color: var(--primary-blue);
-            font-weight: bold;
-            border-radius: 6px;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 5px;
-            transition: background-color 0.2s;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            transition: all 0.2s;
             text-align: center;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .add-btn:hover {
             background-color: var(--accent-blue);
+            border-style: solid;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
         }
 
-        /* Inputs */
-        input[type="text"], textarea, input[type="date"] {
-            width: 100%;
-            border: none;
-            background: transparent;
-            font-family: inherit;
-            font-size: 16px;
-            outline: none;
-            color: #1e293b;
-        }
-        
-        textarea {
-            border: 1px solid #cbd5e1;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 4px;
-            resize: vertical;
-            min-height: 40px;
-        }
-
-        textarea:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
-        }
-
+        /* Layout Utils */
         .columns-2 {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 25px;
         }
+
+        .col-header {
+            font-size: 14px;
+            color: var(--text-main);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .col-header.blue { border-bottom: 2px solid var(--primary-blue); }
+        .col-header.red { border-bottom: 2px solid var(--danger-red); }
 
         /* Print Button */
         .no-print-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 40px;
+            right: 40px;
             padding: 14px 28px;
-            background: var(--primary-blue);
-            color: #fff;
+            background: var(--text-main);
+            color: var(--white);
             border: none;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 16px;
             cursor: pointer;
             z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .no-print-btn:hover {
+            transform: translateY(-3px);
+            background-color: black;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
-        /* --- Desktop & Tablet Breakpoints --- */
-        @media (min-width: 768px) {
-            body { padding: 40px 20px; }
-            .page { padding: 40px 50px; }
-            .header-grid { grid-template-columns: 1fr 1fr; }
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .page { padding: 25px; margin-bottom: 90px; border-radius: 0; box-shadow: none; }
+            .header-grid { grid-template-columns: 1fr; gap: 15px; }
+            h1 { font-size: 22px; margin-bottom: 25px; }
+            h2 { margin-top: 30px; }
+        }
+
+        @media (min-width: 769px) {
             .columns-2 { grid-template-columns: 1fr 1fr; }
-            .no-print-btn { top: 20px; bottom: auto; }
-            h1 { font-size: 26px; }
         }
 
-        /* --- Print Styles --- */
+        /* --- PRINT OPTIMIZATIONS --- */
         @media print {
-            body { background: none; padding: 0; display: block; }
-            .page { box-shadow: none; width: 100%; max-width: 100%; padding: 0; border: none; margin: 0; }
+            @page {
+                margin: 0;
+                size: auto;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+
+            .page {
+                box-shadow: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 0 40px; 
+                margin: 0;
+                border: none;
+                border-radius: 0;
+            }
+
             .no-print { display: none !important; }
-            .header-grid { grid-template-columns: 1fr 1fr !important; }
-            .columns-2 { grid-template-columns: 1fr 1fr !important; }
-            h2 { background-color: #000 !important; color: white !important; -webkit-print-color-adjust: exact; }
-            .section-content, .dynamic-item { border: 1px solid #ccc; break-inside: avoid; }
-            textarea { border: 1px solid #ccc; }
+
+            .logo-header {
+                width: 100%;
+                margin: 0 -40px 20px -40px;
+                width: calc(100% + 80px);
+                border-radius: 0;
+            }
+            
+            .page-footer {
+                margin: 40px -40px 0 -40px;
+                width: calc(100% + 80px);
+                border-radius: 0;
+            }
+
+            h1 { font-size: 24px; margin: 10px 0 5px 0; padding-bottom: 10px; }
+            .sub-header { margin-bottom: 20px; }
+            
+            h2 { 
+                font-size: 14px; 
+                margin: 20px 0 15px 0; 
+                padding: 8px 15px;
+                background: #1e40af !important;
+                color: #fff !important;
+                box-shadow: none;
+                border-radius: 4px;
+                page-break-after: avoid;
+            }
+
+            .section-content {
+                padding: 0;
+                margin-bottom: 20px;
+                border: none;
+                background: none;
+                page-break-inside: avoid;
+            }
+            
+            .header-grid, .columns-2 { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 20px; 
+            }
+
+            .dynamic-item {
+                border: 1px solid #ccc;
+                box-shadow: none;
+                transform: none !important;
+                page-break-inside: avoid;
+            }
+
+            input[type="text"], input[type="date"], textarea {
+                background: transparent !important;
+                box-shadow: none !important;
+                border: none;
+                border-bottom: 1px solid #94a3b8;
+                padding: 0 5px;
+                color: #000;
+                font-weight: 600;
+            }
+            
+            textarea {
+                border: 1px solid #94a3b8;
+                border-radius: 4px;
+            }
         }
     </style>
 </head>
@@ -251,6 +477,12 @@
     </button>
 
     <div class="page">
+        <!-- Logo Header Space -->
+        <div class="logo-header">
+            <!-- REPLACE 'Header.png' with your actual logo filename -->
+            <img src="Header.png" alt="Company Logo">
+        </div>
+
         <!-- Title -->
         <h1>JD Scorecard (WHO)</h1>
         <div class="sub-header">Job Description & Competency Framework</div>
@@ -266,7 +498,7 @@
         <!-- Section 1: Mission -->
         <h2>1. Mission (The Why)</h2>
         <div class="section-content">
-            <div class="header-field" style="display: block; margin-bottom: 5px;">
+            <div class="header-field" style="margin-bottom: 12px;">
                 <span style="color: var(--primary-blue);">Executive Summary:</span>
             </div>
             <textarea rows="4" placeholder="Briefly describe the core purpose of this role..."></textarea>
@@ -280,31 +512,31 @@
             <!-- Outcome 1 -->
             <div class="dynamic-item">
                 <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
-                <div class="header-field" style="margin-bottom: 5px;">
+                <div class="header-field" style="margin-bottom: 12px;">
                     <span>Outcome 1:</span> <div class="underline"><input type="text" placeholder="Description of the goal"></div>
                 </div>
-                <div class="header-field" style="margin-top: 10px;">
-                    <span style="font-size: 13px; color: #64748b;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
+                <div class="header-field">
+                    <span style="color: var(--text-secondary); font-size: 13px;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
                 </div>
             </div>
             <!-- Outcome 2 -->
             <div class="dynamic-item">
                 <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
-                <div class="header-field" style="margin-bottom: 5px;">
+                <div class="header-field" style="margin-bottom: 12px;">
                     <span>Outcome 2:</span> <div class="underline"><input type="text" placeholder="Description of the goal"></div>
                 </div>
-                <div class="header-field" style="margin-top: 10px;">
-                    <span style="font-size: 13px; color: #64748b;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
+                <div class="header-field">
+                    <span style="color: var(--text-secondary); font-size: 13px;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
                 </div>
             </div>
             <!-- Outcome 3 -->
             <div class="dynamic-item">
                 <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
-                <div class="header-field" style="margin-bottom: 5px;">
+                <div class="header-field" style="margin-bottom: 12px;">
                     <span>Outcome 3:</span> <div class="underline"><input type="text" placeholder="Description of the goal"></div>
                 </div>
-                <div class="header-field" style="margin-top: 10px;">
-                    <span style="font-size: 13px; color: #64748b;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
+                <div class="header-field">
+                    <span style="color: var(--text-secondary); font-size: 13px;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
                 </div>
             </div>
         </div>
@@ -315,16 +547,16 @@
         <h2>3. Critical Competencies (The How)</h2>
         <div class="instruction">The behaviors and technical skills required to achieve the outcomes above.</div>
 
-        <div class="columns-2" style="margin-top: 20px;">
+        <div class="columns-2">
             <!-- Behavioral Competencies -->
             <div>
-                <h3 style="font-size: 14px; color: var(--text-main); border-bottom: 2px solid var(--primary-blue); padding-bottom: 5px; margin-bottom: 10px;">Behavioral Competencies</h3>
+                <div class="col-header blue">Behavioral Competencies</div>
                 <div id="behavioral-container">
-                    <div class="dynamic-item" style="padding: 10px;">
+                    <div class="dynamic-item">
                         <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
                         <textarea rows="2" placeholder="e.g., Strategic Thinking..."></textarea>
                     </div>
-                    <div class="dynamic-item" style="padding: 10px;">
+                    <div class="dynamic-item">
                         <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
                         <textarea rows="2" placeholder="e.g., Adaptability..."></textarea>
                     </div>
@@ -334,19 +566,24 @@
 
             <!-- Technical Skills -->
             <div>
-                <h3 style="font-size: 14px; color: var(--text-main); border-bottom: 2px solid var(--danger-red); padding-bottom: 5px; margin-bottom: 10px;">Technical/Hard Skills</h3>
+                <div class="col-header red">Technical/Hard Skills</div>
                 <div id="technical-container">
-                    <div class="dynamic-item" style="padding: 10px;">
+                    <div class="dynamic-item">
                         <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
                         <textarea rows="2" placeholder="e.g., Python, Financial Modeling..."></textarea>
                     </div>
-                    <div class="dynamic-item" style="padding: 10px;">
+                    <div class="dynamic-item">
                         <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
                         <textarea rows="2" placeholder="e.g., Project Management..."></textarea>
                     </div>
                 </div>
                 <button class="add-btn no-print" onclick="addItem('technical-container')">+ Add Skill</button>
             </div>
+        </div>
+
+        <div class="page-footer">
+            <!-- REPLACE 'footer.png' with your actual footer filename -->
+            <img src="footer.png" alt="Footer Image">
         </div>
 
     </div>
@@ -362,19 +599,18 @@
             if (containerId === 'outcomes-container') {
                 div.innerHTML = `
                     <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
-                    <div class="header-field" style="margin-bottom: 5px;">
+                    <div class="header-field" style="margin-bottom: 12px;">
                         <span>Outcome ${count}:</span> <div class="underline"><input type="text" placeholder="Description of the goal"></div>
                     </div>
-                    <div class="header-field" style="margin-top: 10px;">
-                        <span style="font-size: 13px; color: #64748b;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
+                    <div class="header-field">
+                        <span style="color: var(--text-secondary); font-size: 13px;">Metric:</span> <div class="underline"><input type="text" placeholder="How will we measure success?"></div>
                     </div>
                 `;
             } 
             else if (containerId === 'behavioral-container' || containerId === 'technical-container') {
-                div.style.padding = "10px";
                 div.innerHTML = `
                     <button class="delete-btn no-print" onclick="deleteItem(this)">×</button>
-                    <textarea rows="2"></textarea>
+                    <textarea rows="2" placeholder="Enter competency..."></textarea>
                 `;
             }
 
@@ -405,6 +641,21 @@
                 if(span) span.textContent = `Outcome ${count}:`;
             });
         }
+        
+        // UX: Make clicking anywhere on a date input open the calendar picker natively
+        const dateInputs = document.querySelectorAll('input[type="date"]');
+        dateInputs.forEach(input => {
+            input.addEventListener('click', function(e) {
+                e.preventDefault();
+                try {
+                    if (typeof this.showPicker === 'function') {
+                        this.showPicker();
+                    }
+                } catch (err) {
+                    console.log('Error showing date picker:', err);
+                }
+            });
+        });
     </script>
 
 </body>
